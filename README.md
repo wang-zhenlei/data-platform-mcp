@@ -41,13 +41,35 @@ data-platform-mcp/
 └── examples/       # wiring samples for common agent clients
 ```
 
+## Quickstart (v0.1, in-memory demo adapter)
+
+```bash
+git clone https://github.com/wang-zhenlei/data-platform-mcp
+cd data-platform-mcp
+pip install -e .
+data-platform-mcp        # stdio MCP server with demo data (4 tables, lineage, 2 metrics)
+pytest -q                # smoke tests
+```
+
+Then register with any MCP client (Claude Desktop / Claude Code):
+
+```json
+{
+  "mcpServers": {
+    "data-platform": { "command": "data-platform-mcp" }
+  }
+}
+```
+
+Try asking your agent: *"which tables feed the returns fact table?"* — it should call `search_tables` → `query_upstream` and answer from the graph, not from a schema dump.
+
 ## Status
 
-**v0 — spec & skeleton.** The tool contracts in `docs/tools.md` are the source of truth and are being implemented against the adapter API. Contributions welcome, especially adapters.
+**v0.1 — server core + in-memory demo adapter, runnable end-to-end.** The tool contracts in `docs/tools.md` are the source of truth; the demo adapter implements them so agents and client integrations can be built today while real adapters are in progress. Contributions welcome, especially adapters.
 
 ## Roadmap
 
-- [ ] v0.1 — MCP server core + in-memory demo adapter (runnable end-to-end)
+- [x] v0.1 — MCP server core + in-memory demo adapter (runnable end-to-end)
 - [ ] v0.2 — OpenLineage + OpenMetadata adapters
 - [ ] v0.3 — metric semantics layer (term resolution, definition governance)
 - [ ] v0.4 — row/column-level permission enforcement hooks
