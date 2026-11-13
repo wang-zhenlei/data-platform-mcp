@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "data-platform-mcp"
+version = "0.1.0"
+description = "Bring your data platform to AI agents — an open MCP server exposing metadata, lineage, and metrics as first-class agent tools"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=1.2.0",
+]
+
+[project.scripts]
+data-platform-mcp = "src.server:mcp.run"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src", "adapters"]
